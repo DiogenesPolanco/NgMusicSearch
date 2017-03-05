@@ -1,0 +1,42 @@
+<div class="resource" layout-align="center">
+  <md-content class="md-padding" flex="85" flex-sm="100" flex-xs="100">
+    <div layout="column" ng-cloak class="md-inline-form">
+      <md-content layout-padding>
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex="50" flex-sm="100" flex-xs="100">
+            <label>What is your favorite album or artist?</label>
+            <input ng-model="vm.qstring" md-min-length="0" ng-keyup="vm.getResources()">
+          </md-input-container>
+          <md-input-container flex="50" flex-sm="100" flex-xs="100">
+            <label>Search Type</label>
+            <md-select name="type" ng-model="vm.type" ng-change="vm.getResources()">
+              <md-option value="album">Albums</md-option>
+              <md-option value="artist">Artists</md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+      </md-content>
+    </div>
+  </md-content>
+  <md-card ng-repeat="resource in vm.resources" flex="25" flex-sm="100" flex-xs="100">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">{{ resource.name }}</span>
+          <span class="md-subhead" ng-repeat="artist in resource.artists">{{ artist.name }}</span>
+      </md-card-title-text>
+      <md-card-title-media>
+        <div class="md-media-lg card-media">
+          <img ng-src="{{ resource.images[1].url }}" alt="{{ resource.name }}">
+        </div>
+      </md-card-title-media>
+    </md-card-title>
+    <md-card-actions layout="row" layout-align="end center">
+      <md-button ng-click="vm.playSound(resource)">Play</md-button>
+      <md-button href="{{ resource.external_urls.spotify}}" target="_blank" aria-label="spotify.com">Go Album</md-button>
+    </md-card-actions>
+  </md-card>
+ <div layout="row" flex="100" layout-align="center center">
+    <cl-paging  cl-pages="vm.total" cl-steps="6" cl-page-changed="vm.onPageChanged()" cl-align="start start" cl-current-page="vm.current"></cl-paging>
+</div>
+
+</div>
